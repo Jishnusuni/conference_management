@@ -21,8 +21,6 @@ class Registration(Document):
         # Enforce session capacity limit
         self.validate_session_capacity()
 
-        # Simulate payment processing
-        # self.process_payment()
 
     def validate_attendee_session_overlap(self):
         """
@@ -88,33 +86,3 @@ class Registration(Document):
             frappe.throw(
                 "This session has reached its maximum attendee capacity."
             )
-
-    def process_payment(self):
-        """
-        Simulate payment processing for a registration.
-
-        Payment is processed only when the status is Pending.
-        Updates payment_status to Paid or Failed.
-        """
-        # Do not reprocess payment
-        if self.payment_status != "Pending":
-            return
-
-        payment_success = self.mock_payment_gateway()
-
-        if payment_success:
-            self.payment_status = "Paid"
-        else:
-            self.payment_status = "Failed"
-
-    def mock_payment_gateway(self):
-        """
-        Mock payment gateway simulation.
-
-        Returns:
-            True  -> Payment successful
-            False -> Payment failed
-
-        Success rate: ~80%
-        """
-        return random.choice([True, True, True, True, False])
