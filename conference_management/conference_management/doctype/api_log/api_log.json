@@ -5,6 +5,8 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "section_break_htoy",
+  "column_break_zkzo",
   "api_endpoint",
   "method",
   "request_body",
@@ -16,38 +18,54 @@
   {
    "fieldname": "api_endpoint",
    "fieldtype": "Data",
-   "label": "API Endpoint"
+   "label": "API Endpoint",
+   "read_only": 1
   },
   {
    "fieldname": "method",
    "fieldtype": "Select",
    "label": "Method",
-   "options": "GET\nPOST\nPUT\nDELETE"
+   "options": "GET\nPOST\nPUT\nDELETE",
+   "read_only": 1
   },
   {
    "fieldname": "request_body",
    "fieldtype": "Code",
-   "label": "Request Body"
+   "label": "Request Body",
+   "read_only": 1
   },
   {
    "fieldname": "column_break_yzan",
-   "fieldtype": "Column Break"
+   "fieldtype": "Column Break",
+   "read_only": 1
   },
   {
    "fieldname": "status_code",
    "fieldtype": "Int",
-   "label": "Status Code"
+   "label": "Status Code",
+   "read_only": 1
   },
   {
    "fieldname": "response_body",
    "fieldtype": "Code",
-   "label": "Response Body"
+   "label": "Response Body",
+   "read_only": 1
+  },
+  {
+   "fieldname": "column_break_zkzo",
+   "fieldtype": "Column Break",
+   "read_only": 1
+  },
+  {
+   "fieldname": "section_break_htoy",
+   "fieldtype": "Section Break",
+   "read_only": 1
   }
  ],
  "grid_page_length": 50,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2026-01-14 11:23:24.083044",
+ "modified": "2026-01-15 12:00:00.757370",
  "modified_by": "Administrator",
  "module": "Conference Management",
  "name": "API Log",

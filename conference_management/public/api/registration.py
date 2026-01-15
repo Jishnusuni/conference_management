@@ -3,59 +3,73 @@
 import frappe
 from frappe.utils import now_datetime
 from conference_management.conference_management.doctype.registration.registration import Registration as RegistrationDoc
+from conference_management.public.api.utils import log_api_request
+
 
 @frappe.whitelist(allow_guest=True)
 def register_session(**kwargs):
-    """
-    Public API to register an attendee for a session.
-    Accepts flexible arguments using **kwargs.
-
-    Required kwargs:
-        - attendee: Attendee DocType name
-        - session: Session DocType name
-        - conference: Conference DocType name
-
-    Optional kwargs can include:
-        - any custom fields for Registration
-
-    Returns:
-        dict: Registration status and payment outcome
-    """
-
-    # Extract required fields from kwargs
-    attendee = kwargs.get("attendee")
-    session = kwargs.get("session")
-    conference = kwargs.get("conference")
-
-    # Validate required fields
-    if not attendee or not frappe.db.exists("Attendee", attendee):
-        return {"status": "error", "message": "Attendee not found."}
-    if not session or not frappe.db.exists("Session", session):
-        return {"status": "error", "message": "Session not found."}
-    if not conference or not frappe.db.exists("Conference", conference):
-        return {"status": "error", "message": "Conference not found."}
-
-    # Build Registration document
-    reg_doc_dict = {
-        "doctype": "Registration",
-        "attendee": attendee,
-        "session": session,
-        "conference": conference,
-        "registration_date": now_datetime(),
-        "payment_status": "Pending"
-    }
-
-    reg_doc = frappe.get_doc(reg_doc_dict)
+    api_endpoint = "register_session"
+    method = "POST"
+    request_body = kwargs
 
     try:
-        # Insert registration and trigger validations
-        reg_doc.insert(ignore_permissions=True)
+        # 1. Required fields
+        attendee = kwargs.get("attendee")
+        session = kwargs.get("session")
+        conference = kwargs.get("conference")
 
-        return {
+        if not attendee or not frappe.db.exists("Attendee", attendee):
+            response = {"status": "error", "message": "Attendee not found."}
+            log_api_request(api_endpoint, method, request_body, response, 400)
+            return response
+
+        if not session or not frappe.db.exists("Session", session):
+            response = {"status": "error", "message": "Session not found."}
+            log_api_request(api_endpoint, method, request_body, response, 400)
+            return response
+
+        if not conference or not frappe.db.exists("Conference", conference):
+            response = {"status": "error", "message": "Conference not found."}
+            log_api_request(api_endpoint, method, request_body, response, 400)
+            return response
+
+        # 2. Create Registration document
+        reg_doc_dict = {
+            "doctype": "Registration",
+            "attendee": attendee,
+            "session": session,
+            "conference": conference,
+            "registration_date": now_datetime(),
+            "payment_status": "Pending"
+        }
+
+        # Merge optional kwargs
+        for key, value in kwargs.items():
+            if key not in ["attendee", "session", "conference"]:
+                reg_doc_dict[key] = value
+
+        reg_doc = frappe.get_doc(reg_doc_dict)
+
+        # 3. Insert registration (triggers validate hooks)
+        reg_doc.insert(ignore_permissions=True)
+        reg_doc.submit()
+
+        # 4. Success response
+        response = {
             "status": "success",
             "registration": reg_doc.name,
             "payment_status": reg_doc.payment_status
         }
+        log_api_request(api_endpoint, method, request_body, response, 200)
+        return response
 
     except frappe.ValidationError as e:
-        return {"status": "error", "message": str(e)}
+        response = {"status": "error", "message": str(e)}
+        log_api_request(api_endpoint, method, request_body, response, 400)
+        return response
+
+    except Exception as e:
+        response = {"status": "error", "message": "Internal Server Error"}
+        log_api_request(api_endpoint, method, request_body, response, 500)
+        frappe.log_error(frappe.get_traceback(), "API Error")
+        return response
