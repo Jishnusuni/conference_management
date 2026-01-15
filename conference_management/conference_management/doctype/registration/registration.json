@@ -1,0 +1,80 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "autoname": "format:REG-{conference}-{####}",
+ "creation": "2026-01-14 11:18:23.961953",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "conference",
+  "registration_date",
+  "session",
+  "column_break_aoul",
+  "attendee",
+  "payment_status"
+ ],
+ "fields": [
+  {
+   "fieldname": "conference",
+   "fieldtype": "Link",
+   "label": "Conference",
+   "options": "Conference"
+  },
+  {
+   "default": "Today",
+   "fieldname": "registration_date",
+   "fieldtype": "Date",
+   "label": "Registration Date"
+  },
+  {
+   "fieldname": "column_break_aoul",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "attendee",
+   "fieldtype": "Link",
+   "label": "Attendee",
+   "options": "Attendee"
+  },
+  {
+   "fieldname": "payment_status",
+   "fieldtype": "Select",
+   "label": "Payment Status",
+   "options": "Pending\nPaid\nFailed"
+  },
+  {
+   "fieldname": "session",
+   "fieldtype": "Link",
+   "label": "Session",
+   "options": "Session"
+  }
+ ],
+ "grid_page_length": 50,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2026-01-14 18:14:10.166984",
+ "modified_by": "Administrator",
+ "module": "Conference Management",
+ "name": "Registration",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "row_format": "Dynamic",
+ "rows_threshold_for_grid_search": 20,
+ "sort_field": "modified",
+ "sort_order": "DESC",
+ "states": []
+}

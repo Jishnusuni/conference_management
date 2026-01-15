@@ -148,23 +148,11 @@ app_license = "mit"
 # Scheduled Tasks
 # ---------------
 
-# scheduler_events = {
-# 	"all": [
-# 		"conference_management.tasks.all"
-# 	],
-# 	"daily": [
-# 		"conference_management.tasks.daily"
-# 	],
-# 	"hourly": [
-# 		"conference_management.tasks.hourly"
-# 	],
-# 	"weekly": [
-# 		"conference_management.tasks.weekly"
-# 	],
-# 	"monthly": [
-# 		"conference_management.tasks.monthly"
-# 	],
-# }
+scheduler_events = {
+	"weekly": [
+		"conference_management.public.python.preference_email_send.send_scheduled_recommendations"
+	]
+}
 
 # Testing
 # -------
