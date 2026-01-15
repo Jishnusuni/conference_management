@@ -3,7 +3,7 @@
 import frappe
 from frappe.utils import now_datetime
 from conference_management.conference_management.doctype.registration.registration import Registration as RegistrationDoc
-from conference_management.public.api.utils import log_api_request
+from conference_management.api.utils import log_api_request
 
 
 @frappe.whitelist(allow_guest=True)

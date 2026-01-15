@@ -2,10 +2,11 @@
 
 import frappe
 from frappe.utils import getdate, today
-from conference_management.public.api.utils import log_api_request
+from conference_management.api.utils import log_api_request
 
 @frappe.whitelist(allow_guest=True)
 def get_upcoming_conferences():
+    
     """
     Public API to fetch all upcoming conferences
     along with their sessions.

@@ -1,6 +1,6 @@
 import frappe
 import random
-from conference_management.public.api.utils import log_api_request
+from conference_management.api.utils import log_api_request
 
 @frappe.whitelist(allow_guest=True)
 def process_payment(registration_id):

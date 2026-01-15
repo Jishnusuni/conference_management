@@ -1,6 +1,6 @@
 import frappe
 from frappe.utils import today
-from conference_management.public.api.utils import log_api_request
+from conference_management.api.utils import log_api_request
 
 @frappe.whitelist(allow_guest=True)
 def get_attendee_recommendations(attendee):

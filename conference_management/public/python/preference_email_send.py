@@ -3,7 +3,6 @@ from frappe.utils import now_datetime
 
 
 def send_scheduled_recommendations():
-    print("-------called ----------")
     """
     Scheduler entry point.
 
