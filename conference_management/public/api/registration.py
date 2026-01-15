@@ -52,7 +52,6 @@ def register_session(**kwargs):
 
         # 3. Insert registration (triggers validate hooks)
         reg_doc.insert(ignore_permissions=True)
-        reg_doc.submit()
 
         # 4. Success response
         response = {
